@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyAlarmApp</string>
+
+    <string name="alarm_time">오전 09:30</string>
 </resources>
