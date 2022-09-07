@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.eshc.myalarmapp.databinding.ItemAlarmBinding
-import com.eshc.myalarmapp.ui.model.Alarm
+import com.eshc.myalarmapp.ui.model.AlarmUIModel
 
-class AlarmAdapter : ListAdapter<Alarm, AlarmAdapter.AlarmViewHolder>(AlarmDiffCallback()) {
+class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(AlarmDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
         return AlarmViewHolder(
@@ -25,19 +25,19 @@ class AlarmAdapter : ListAdapter<Alarm, AlarmAdapter.AlarmViewHolder>(AlarmDiffC
     }
 
     class AlarmViewHolder(val binding : ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(alarm : Alarm){
+        fun bind(alarm : AlarmUIModel){
             binding.apply {
                 this.alarm = alarm
             }
         }
     }
 
-    private class AlarmDiffCallback : DiffUtil.ItemCallback<Alarm>() {
-        override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+    private class AlarmDiffCallback : DiffUtil.ItemCallback<AlarmUIModel>() {
+        override fun areItemsTheSame(oldItem: AlarmUIModel, newItem: AlarmUIModel): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm): Boolean {
+        override fun areContentsTheSame(oldItem: AlarmUIModel, newItem: AlarmUIModel): Boolean {
             return oldItem == newItem
         }
 
