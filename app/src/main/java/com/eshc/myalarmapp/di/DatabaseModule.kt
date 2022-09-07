@@ -3,6 +3,7 @@ package com.eshc.myalarmapp.di
 import android.content.Context
 import androidx.room.Room
 import com.eshc.myalarmapp.data.source.local.db.AppDatabase
+import com.eshc.myalarmapp.data.source.local.db.dao.AlarmDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +27,12 @@ object DatabaseModule {
         )
             .fallbackToDestructiveMigration()
             .build()
+    }
+
+    @Provides
+    fun provideAlarmDao(
+        database : AppDatabase
+    ) : AlarmDao {
+        return database.alarmDao()
     }
 }
