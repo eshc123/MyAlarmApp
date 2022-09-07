@@ -1,6 +1,6 @@
 package com.eshc.myalarmapp.ui.model
 
-data class Alarm(
+data class AlarmUIModel(
     val id : Int,
     val time : String,
     val title : String,

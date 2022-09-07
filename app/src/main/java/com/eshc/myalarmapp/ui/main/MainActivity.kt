@@ -10,7 +10,9 @@ import com.eshc.myalarmapp.R
 import com.eshc.myalarmapp.databinding.ActivityMainBinding
 import com.eshc.myalarmapp.ui.adapter.AlarmAdapter
 import com.eshc.myalarmapp.ui.detail.DetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         _binding = DataBindingUtil.setContentView(
             this, R.layout.activity_main
         )
-
+        viewModel
         initRecyclerView()
         initFab()
     }
