@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.eshc.myalarmapp.databinding.ItemAlarmBinding
 import com.eshc.myalarmapp.ui.model.AlarmUIModel
+import com.eshc.myalarmapp.ui.model.toAlarmModel
+import com.eshc.myalarmapp.ui.model.toAlarmUIModel
 
 class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(AlarmDiffCallback()) {
 
@@ -28,6 +30,9 @@ class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(Ala
         fun bind(alarm : AlarmUIModel){
             binding.apply {
                 this.alarm = alarm
+                this.swActive.setOnClickListener {
+                    alarm.onActive()
+                }
             }
         }
     }

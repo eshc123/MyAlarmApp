@@ -5,12 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.eshc.myalarmapp.R
 import com.eshc.myalarmapp.databinding.ActivityMainBinding
 import com.eshc.myalarmapp.ui.adapter.AlarmAdapter
 import com.eshc.myalarmapp.ui.detail.DetailActivity
+import com.eshc.myalarmapp.ui.model.toAlarmUIModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,14 +35,15 @@ class MainActivity : AppCompatActivity() {
         _binding = DataBindingUtil.setContentView(
             this, R.layout.activity_main
         )
-        viewModel
+
         initRecyclerView()
         initFab()
+        initObserver()
     }
 
     private fun initRecyclerView(){
         binding?.rvAlarm?.let {
-            it.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+            it.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
             it.adapter = alarmAdapter
         }
     }
@@ -47,5 +54,24 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this,DetailActivity::class.java))
             }
         }
+    }
+
+    private fun initObserver() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.alarms.collect { list ->
+                    alarmAdapter.submitList(
+                        list.map {
+                            it.toAlarmUIModel(
+                                onActive = {
+                                    viewModel.updateAlarm(it.id)
+                                }
+                            )
+                        }
+                    )
+                }
+            }
+        }
+
     }
 }
