@@ -1,5 +1,6 @@
 package com.eshc.myalarmapp.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -26,6 +27,19 @@ class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(Ala
         holder.bind(getItem(position))
     }
 
+    override fun onBindViewHolder(
+        holder: AlarmViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if(payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if(payloads[0] == true)
+                holder.bindActiveState(getItem(position).isActive)
+        }
+    }
+    
     class AlarmViewHolder(val binding : ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(alarm : AlarmUIModel){
             binding.apply {
@@ -34,6 +48,9 @@ class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(Ala
                     alarm.onActive()
                 }
             }
+        }
+        fun bindActiveState(isActive : Boolean) {
+            binding.swActive.isChecked = isActive
         }
     }
 
@@ -46,5 +63,8 @@ class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(Ala
             return oldItem == newItem
         }
 
+        override fun getChangePayload(oldItem: AlarmUIModel, newItem: AlarmUIModel): Any? {
+            return if(oldItem.isActive != newItem.isActive) true else null
+        }
     }
 }
