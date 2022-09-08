@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.eshc.myalarmapp.databinding.ItemAlarmBinding
 import com.eshc.myalarmapp.ui.model.AlarmUIModel
 
-class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(AlarmDiffCallback()) {
+class AlarmAdapter(
+    private val onClick: (AlarmUIModel) -> Unit
+) : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(AlarmDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
         return AlarmViewHolder(
@@ -24,11 +26,32 @@ class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(Ala
         holder.bind(getItem(position))
     }
 
-    class AlarmViewHolder(val binding : ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root) {
+    override fun onBindViewHolder(
+        holder: AlarmViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if(payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            if(payloads[0] == true)
+                holder.bindActiveState(getItem(position).isActive)
+        }
+    }
+
+    inner class AlarmViewHolder(
+        private val binding : ItemAlarmBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(alarm : AlarmUIModel){
             binding.apply {
                 this.alarm = alarm
+                this.swActive.setOnClickListener {
+                    onClick(alarm)
+                }
             }
+        }
+        fun bindActiveState(isActive : Boolean) {
+            binding.swActive.isChecked = isActive
         }
     }
 
@@ -41,5 +64,8 @@ class AlarmAdapter : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(Ala
             return oldItem == newItem
         }
 
+        override fun getChangePayload(oldItem: AlarmUIModel, newItem: AlarmUIModel): Any? {
+            return if(oldItem.isActive != newItem.isActive) true else null
+        }
     }
 }

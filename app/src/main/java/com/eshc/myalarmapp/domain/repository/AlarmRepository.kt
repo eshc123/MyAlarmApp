@@ -10,4 +10,6 @@ interface AlarmRepository {
     suspend fun insertAlarm(alarm : AlarmModel)
 
     suspend fun updateAlarm(alarm : AlarmModel)
+
+    suspend fun updateAlarmIsActive(alarmId : Int)
 }

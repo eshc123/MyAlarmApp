@@ -21,4 +21,8 @@ class AlarmRepositoryImpl @Inject constructor(
     override suspend fun updateAlarm(alarm: AlarmModel) {
         alarmDataSource.updateAlarm(alarm)
     }
+
+    override suspend fun updateAlarmIsActive(alarmId: Int) {
+        alarmDataSource.updateAlarmIsActive(alarmId)
+    }
 }
