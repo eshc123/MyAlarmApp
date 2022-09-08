@@ -6,19 +6,16 @@ data class AlarmUIModel(
     val id : Int,
     val time : String,
     val title : String,
-    val isActive : Boolean,
-    val onActive : () -> Unit
+    val isActive : Boolean
 )
 
 fun AlarmModel.toAlarmUIModel(
-    onActive: () -> Unit
 ) : AlarmUIModel {
     return AlarmUIModel(
         id = id ?: -1,
         time = time,
         title = title,
-        isActive = isActive,
-        onActive = onActive
+        isActive = isActive
     )
 }
 

@@ -3,6 +3,7 @@ package com.eshc.myalarmapp.ui.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -27,7 +28,11 @@ class MainActivity : AppCompatActivity() {
     private val viewModel : MainViewModel by viewModels()
 
     private val alarmAdapter : AlarmAdapter by lazy {
-        AlarmAdapter()
+        AlarmAdapter(
+            onClick = {
+                viewModel.updateAlarm(it.id)
+            }
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,11 +67,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.alarms.collect { list ->
                     alarmAdapter.submitList(
                         list.map {
-                            it.toAlarmUIModel(
-                                onActive = {
-                                    viewModel.updateAlarm(it.id)
-                                }
-                            )
+                            it.toAlarmUIModel()
                         }
                     )
                 }
