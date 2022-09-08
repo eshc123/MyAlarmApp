@@ -11,7 +11,7 @@ data class AlarmEntity(
     @ColumnInfo(name = "alarm_id") val id : Int = 0,
     @ColumnInfo(name = "title") val title : String,
     @ColumnInfo(name = "time") val time : String,
-    @ColumnInfo(name = "active") val active : Boolean
+    @ColumnInfo(name = "is_active") val isActive : Boolean
 )
 
 fun AlarmEntity.toAlarmModel() : AlarmModel {
@@ -19,7 +19,7 @@ fun AlarmEntity.toAlarmModel() : AlarmModel {
         id = id,
         title = title,
         time = time,
-        active = active
+        isActive = isActive
     )
 }
 
@@ -27,6 +27,6 @@ fun AlarmModel.toAlarmEntity() : AlarmEntity {
     return AlarmEntity(
         title = title,
         time = time,
-        active = active
+        isActive = isActive
     )
 }
