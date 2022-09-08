@@ -9,7 +9,8 @@ import com.eshc.myalarmapp.databinding.ItemAlarmBinding
 import com.eshc.myalarmapp.ui.model.AlarmUIModel
 
 class AlarmAdapter(
-    private val onClick: (AlarmUIModel) -> Unit
+    private val onClick: (AlarmUIModel) -> Unit,
+    private val onSwitch: (AlarmUIModel) -> Unit
 ) : ListAdapter<AlarmUIModel, AlarmAdapter.AlarmViewHolder>(AlarmDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmViewHolder {
@@ -46,6 +47,9 @@ class AlarmAdapter(
             binding.apply {
                 this.alarm = alarm
                 this.swActive.setOnClickListener {
+                    onSwitch(alarm)
+                }
+                this.root.setOnClickListener {
                     onClick(alarm)
                 }
             }

@@ -15,6 +15,7 @@ import com.eshc.myalarmapp.databinding.ActivityMainBinding
 import com.eshc.myalarmapp.ui.adapter.AlarmAdapter
 import com.eshc.myalarmapp.ui.detail.DetailActivity
 import com.eshc.myalarmapp.ui.model.toAlarmUIModel
+import com.eshc.myalarmapp.util.ALARM_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private val alarmAdapter : AlarmAdapter by lazy {
         AlarmAdapter(
             onClick = {
+                moveToDetail(it.id)
+            },
+            onSwitch = {
                 viewModel.updateAlarm(it.id)
             }
         )
@@ -56,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     private fun initFab(){
         binding?.fbRegister?.let {
             it.setOnClickListener {
-                startActivity(Intent(this,DetailActivity::class.java))
+                moveToDetail()
             }
         }
     }
@@ -73,6 +77,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
+    private fun moveToDetail(alarmId : Int? = null) {
+        val detailIntent = Intent(this,DetailActivity::class.java)
+        if(alarmId != null){
+            detailIntent.putExtra(ALARM_ID,alarmId)
+        }
+        startActivity(detailIntent)
     }
 }
