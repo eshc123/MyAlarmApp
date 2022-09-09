@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AlarmDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrReplaceAlarm(alarmEntity: AlarmEntity) : Long
 
     @Update
@@ -18,4 +18,7 @@ interface AlarmDao {
 
     @Query("SELECT * FROM alarm_table")
     fun getAlarms() : Flow<List<AlarmEntity>>
+
+    @Query("SELECT * FROM alarm_table WHERE alarm_id = :alarmId")
+    suspend fun getAlarmById(alarmId : Int) : AlarmEntity
 }

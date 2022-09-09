@@ -14,6 +14,10 @@ class AlarmRepositoryImpl @Inject constructor(
         return alarmDataSource.getAlarms()
     }
 
+    override suspend fun getAlarmById(alarmId: Int): AlarmModel {
+        return alarmDataSource.getAlarmById(alarmId)
+    }
+
     override suspend fun insertAlarm(alarm: AlarmModel) {
         alarmDataSource.insertAlarm(alarm)
     }

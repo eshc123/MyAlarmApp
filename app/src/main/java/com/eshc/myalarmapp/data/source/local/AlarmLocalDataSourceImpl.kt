@@ -31,4 +31,8 @@ class AlarmLocalDataSourceImpl @Inject constructor(
     override suspend fun updateAlarmIsActive(alarmId: Int) {
         alarmDao.updateAlarmIsActive(alarmId)
     }
+
+    override suspend fun getAlarmById(alarmId: Int): AlarmModel {
+        return alarmDao.getAlarmById(alarmId).toAlarmModel()
+    }
 }

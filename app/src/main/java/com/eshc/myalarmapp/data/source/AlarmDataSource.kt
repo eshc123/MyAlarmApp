@@ -12,4 +12,6 @@ interface AlarmDataSource {
     suspend fun updateAlarm(alarm : AlarmModel)
 
     suspend fun updateAlarmIsActive(alarmId : Int)
+
+    suspend fun getAlarmById(alarmId : Int) : AlarmModel
 }
