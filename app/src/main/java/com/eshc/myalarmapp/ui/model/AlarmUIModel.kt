@@ -3,10 +3,10 @@ package com.eshc.myalarmapp.ui.model
 import com.eshc.myalarmapp.domain.model.AlarmModel
 
 data class AlarmUIModel(
-    val id : Int,
+    val id : Int = -1,
     val time : String,
     val title : String,
-    val isActive : Boolean
+    val isActive : Boolean = true
 )
 
 fun AlarmModel.toAlarmUIModel(
