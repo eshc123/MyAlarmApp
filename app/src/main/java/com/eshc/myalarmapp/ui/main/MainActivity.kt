@@ -34,7 +34,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initContainer(frameLayout: FrameLayout){
         supportFragmentManager.commit {
-            replace(frameLayout.id,AlarmsFragment())
+            AlarmsFragment().apply {
+                addToBackStack(this.tag)
+                replace(frameLayout.id, this, this.tag)
+            }
         }
+    }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount == 0)
+            super.onBackPressed()
+        else
+            supportFragmentManager.popBackStack()
     }
 }
