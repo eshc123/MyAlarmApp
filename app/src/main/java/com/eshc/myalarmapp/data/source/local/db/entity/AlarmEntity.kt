@@ -25,6 +25,7 @@ fun AlarmEntity.toAlarmModel() : AlarmModel {
 
 fun AlarmModel.toAlarmEntity() : AlarmEntity {
     return AlarmEntity(
+        id = id ?: 0,
         title = title,
         time = time,
         isActive = isActive
