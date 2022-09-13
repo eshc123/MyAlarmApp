@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.eshc.myalarmapp.ui.detail.DetailViewModel" />
+            type="com.eshc.myalarmapp.ui.alarmdetail.AlarmDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
